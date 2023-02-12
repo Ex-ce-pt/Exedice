@@ -1,0 +1,98 @@
+<script lang="ts">
+
+    import DevSkills from "./Stack.svelte";
+
+</script>
+
+<main>
+
+    <p>Hi there! I'm Exedice. Glad to see you on my portfolio website!</p>
+
+    <section>
+        <h2>About me</h2>
+        <p>
+            I'm just a regular highschooler.
+        </p>
+        <p>
+            I do a variety of different things: I'm a <span class="trait">programmer</span>,
+            I try to make <span class="trait">music</span> and draw <span class="trait">pixelart</span> sometimes.
+            I'm not very good at it though.
+        </p>
+        <p>
+            I have a quite strong self-diagnosed impostor syndrome. <span class="small">(now read the previous sentence again)</span>
+        </p>
+        <p>
+            I like math and chemistry. Maybe becoming a <span class="trait">bioinformaticists?</span> Who knows?
+        </p>
+    </section>
+
+    <section class="programming">
+        <h2>My programming knowledge</h2>
+        <div>
+            <div>
+                <p>Let's get back to programming, shall we?</p>
+                <p>This is quite literally my stack!</p>
+                <p>The most used tools are at the top.</p>
+            </div>
+            <DevSkills />
+            <div>
+                <p>
+                    On top of that, I have also had some experience with
+                    <span class="trait">Arduino</span> and <span class="trait">Unity</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    
+    
+</main>
+
+<style>
+
+    main {
+        --margin: 10em;
+
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 2 * var(--margin));
+        margin: var(--margin);
+    }
+
+    main > p {
+        text-align: center;
+    }
+
+    section {
+        margin: 10em 0 10em 0;
+    }
+
+    section > h2 {
+        text-align: left;
+        color: grey;
+        margin: 0.5em 0 0.5em 0.2em;
+    }
+
+    section > p {
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+
+    p {
+        margin: 0.2em;
+    }
+
+    .trait {
+        font-weight: bold;
+    }
+
+    .small {
+        font-size: 18px;
+    }
+
+    .programming > div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+</style>
