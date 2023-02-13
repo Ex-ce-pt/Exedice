@@ -1,7 +1,7 @@
 <main>
 
     <div class="shade"></div>
-    <img src="{window.location.href}/mark neo.svg" alt="" />
+    <img src="{window.location.href}icons/mark neo.svg" alt="" />
 
 </main>
 
