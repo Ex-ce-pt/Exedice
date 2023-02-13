@@ -2,6 +2,7 @@
 
     let thisObj: HTMLElement;
     let folded: boolean = false;
+    let copyStatus: 'success' | 'fail' | 'undef' = 'undef';
 
     const toggleFold = (): void => {
         folded = !folded;
@@ -16,10 +17,18 @@
         window.location.href = url;
     }
 
+    const copy = (txt: string): void => {
+        navigator.clipboard.writeText(txt).then(() => {
+            copyStatus = 'success';
+        }).catch(() => {
+            copyStatus = 'fail';
+        });
+    }
+
     setTimeout(toggleFold, 2000);
 
     // TODO:
-    // SoundCloud, Gmail, Discord
+    // SoundCloud, Gmail
 
 </script>
 
@@ -27,11 +36,11 @@
 
     <div class="content">
 
-        <button title="Email" on:click={() => {}}>
-            
+        <button title="Email" on:click={() => copy("except.dice@gmail.com")}>
+
         </button>
 
-        <button title="Discord" on:click={() => {}}>
+        <button title="Discord" on:click={() => copy("Exedice#7316")}>
             <svg
                 width="100"
                 height="100"
@@ -88,6 +97,17 @@
     </div>
 
     <button on:click={toggleFold}></button>
+
+    <div
+        class="copy-status"
+        data-status={copyStatus}
+    >
+        {#if copyStatus === 'success'}
+        Copied to Clipboard!
+        {:else if copyStatus === 'fail'}
+        Failed to Copy!
+        {/if}
+    </div>
 
 </nav>
 
@@ -153,5 +173,40 @@
         cursor: pointer;
     }
 
+    .copy-status {
+        position: absolute;
+        top: -50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 7px;
+        border: 3px solid green;
+        border-radius: 1em;
+        background-color: var(--color-bg);
+        font-size: var(--very-small-font-size);
+        font-weight: bold;
+    }
+
+    .copy-status[data-status="success"] {
+        color: green;
+    }
+
+    .copy-status[data-status="fail"] {
+        color: red;
+    }
+
+    .copy-status[data-status="success"],
+    .copy-status[data-status="fail"] {
+        animation-name: show-copy-status;
+        animation-duration: 2s;
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        animation-fill-mode: forwards;
+        animation-direction: alternate;
+        animation-iteration-count: 2;
+    }
+
+    @keyframes show-copy-status {
+        0% { top: -50%; }
+        100% { top: 50%; }
+    }
 
 </style>
