@@ -22,6 +22,10 @@
 
 </main>
 
+<svelte:head>
+	<link rel='icon' type='image/png' href='{window.location.href}/favicon.png'>
+</svelte:head>
+
 <style>
 
 	main {
