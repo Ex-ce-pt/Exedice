@@ -81,21 +81,30 @@
 
     nav {
         --nav-height: 5em;
+        --toggle-height: 1em;
+        --animation-duration: 0.5s;
+	    --ease: cubic-bezier(0, 0.9, 0.6, 1);
 
         display: grid;
-        grid-template-rows: 1fr 1em;
+        grid-template-rows: 1fr var(--toggle-height);
         position: fixed;
         top: 0;
         left: 0;
         width: calc(100% - var(--scrollbar-width));
-        height: var(--nav-height);
+        height: calc(var(--nav-height) + var(--toggle-height));
         background-color: var(--color-bg);
         z-index: 100;
+        overflow-x: scroll;
         transition: top var(--animation-duration) var(--ease);
+    }
+
+    nav::-webkit-scrollbar {
+        display: none;
     }
 
     nav > button {
         width: 100%;
+        height: var(--toggle-height);
         background-color: var(--color-shaded);
     }
 
@@ -106,9 +115,8 @@
     }
 
     .content > button {
-        aspect-ratio: 1 / 1;
         height: 50%;
-        width: auto;
+        aspect-ratio: 1 / 1;
         padding: 0;
         margin: 0.5em;
         background-color: transparent;
@@ -128,7 +136,6 @@
     
     button {
         cursor: pointer;
-        transition: filter var(--animation-duration) var(--ease);
     }
 
 

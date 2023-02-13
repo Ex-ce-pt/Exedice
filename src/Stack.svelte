@@ -1,6 +1,6 @@
 <script lang="ts">
+    
     import { onMount } from "svelte";
-
 
 
     const STACK = [
@@ -94,9 +94,9 @@
         
         --box-bottom: calc(var(--index) * 100% / var(--stack-size));
 
-        --fall-duration: 2s;
+        --fall-duration: 1s;
         --fall-delay: calc(var(--fall-duration) * var(--index));
-        --fall-timing: cubic-bezier(0.57, 0.24, 1, 0.5);
+        --fall-timing: cubic-bezier(0.6, 0, 1, 0.55);
 
         --bounce-duration: 1s;
         --bounce-delay: calc(var(--fall-delay) + var(--fall-duration));

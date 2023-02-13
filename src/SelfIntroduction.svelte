@@ -51,12 +51,12 @@
 <style>
 
     main {
-        --margin: 10em;
+        --vertical-margin: 10em;
 
         display: flex;
         flex-direction: column;
-        width: calc(100% - 2 * var(--margin));
-        margin: var(--margin);
+        width: 75%;
+        margin: var(--vertical-margin) 0 var(--vertical-margin) 0;
     }
 
     main > p {
@@ -64,7 +64,7 @@
     }
 
     section {
-        margin: 10em 0 10em 0;
+        margin: var(--vertical-margin) 0 var(--vertical-margin) 0;
     }
 
     section > h2 {
@@ -87,7 +87,7 @@
     }
 
     .small {
-        font-size: 18px;
+        font-size: var(--very-small-font-size);
     }
 
     .programming > div {

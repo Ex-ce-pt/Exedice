@@ -1,3 +1,9 @@
+<script lang="ts" context="module">
+
+	export const isMobileUser = /Android|iPhone/i.test(navigator.userAgent);
+
+</script>
+
 <script lang="ts">
 	
     import NavBar from "./NavBar.svelte";
@@ -23,7 +29,9 @@
 </main>
 
 <svelte:head>
+
 	<link rel='icon' type='image/png' href='{window.location.href}/favicon.png'>
+
 </svelte:head>
 
 <style>
@@ -35,6 +43,9 @@
 	}
 
 	.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		position: relative;
 		width: 100%;
 	}
