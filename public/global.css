@@ -1,7 +1,7 @@
 * {
 	--color-content: #F0F0F0;
 	--color-bg: #121212;
-	--color-shaded: #323232;
+	--color-shaded: rgb(70, 70, 70);
 
 	--scrollbar-width: 16px;
 
