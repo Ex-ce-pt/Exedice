@@ -135,6 +135,12 @@
       28%  { transform: scale(1,1)      translateY(0); }
       100% { transform: scale(1,1)      translateY(0); }
     }
+
+    @media screen and (max-width: 1000px) {
+        main {
+            align-self: center;
+        }
+    }
     
 
 </style>

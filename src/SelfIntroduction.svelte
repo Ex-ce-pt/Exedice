@@ -104,4 +104,13 @@
         grid-template-columns: 1fr 1fr;
     }
 
+    @media screen and (max-width: 1000px) {
+        .programming > div {
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            row-gap: 2em;
+        }
+    }
+
 </style>
