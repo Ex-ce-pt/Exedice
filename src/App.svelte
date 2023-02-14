@@ -38,7 +38,7 @@
 
 	main {
 		width: 100%;
-		min-width: 600px;
+		min-width: 200px;
 		overflow-x: hidden;
 	}
 
