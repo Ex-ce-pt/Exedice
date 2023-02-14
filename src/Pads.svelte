@@ -1,22 +1,31 @@
 <script lang="ts">
 	
+	import { isMobileUser } from "./App.svelte";
+
 	export let parent: HTMLElement;
 
-	const PADS_COUNT = 20;
+	const PADS_COUNT = 30;
 	
 	let posY = -100;
 	let listenerSet = false;
 	
 	$: if (parent != undefined && !listenerSet) {
-		parent.addEventListener('mousemove', updatePos);
+		if (!isMobileUser) {
+			parent.addEventListener('mousemove', updatePosCursor);
+		} else {
+			document.body.addEventListener('scroll', updatePosScroll);
+		}
 		listenerSet = true;
 	}
 	
-	const updatePos = (e: MouseEvent): void => {
-        const style = getComputedStyle(parent);
-        const marginTop = Number(style.marginTop.substring(0, style.marginTop.length - 2));
+	const updatePosCursor = (e: MouseEvent): void => {
         const offsetY = e.clientY - parent.getBoundingClientRect().y;
 		posY = Math.floor(offsetY / parent.clientHeight * PADS_COUNT);
+	}
+	
+	const updatePosScroll = (e: Event): void => {
+		const scrolled = document.body.scrollTop - parent.offsetTop + document.body.clientHeight / 2;
+		posY = Math.floor(scrolled / parent.clientHeight * PADS_COUNT);
 	}
 	
 	const clampActivation = (a: number): number => {
@@ -78,16 +87,15 @@
 	div {
 		background-color: cyan;
 		border-radius: var(--width);
+		transition: transform 0.2s ease;
 	}
-	
+
 	.left-side > div {
 		transform: translateX(calc(var(--translate-len) * var(--activation)));
-		transition: transform 0.2s ease;
 	}
 	
 	.right-side > div {
 		transform: translateX(calc(-1 * var(--translate-len) * var(--activation)));
-		transition: transform 0.2s ease;
 	}
 	
 </style>

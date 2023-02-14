@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import DevSkills from "./Stack.svelte";
+    import Projects from "./Projects.svelte";
 
 </script>
 
@@ -29,34 +30,42 @@
     <section class="programming">
         <h2>My programming knowledge</h2>
         <div>
+
             <div>
                 <p>Let's get back to programming, shall we?</p>
                 <p>This is quite literally my stack!</p>
                 <p>The most used tools are at the top.</p>
             </div>
+
             <DevSkills />
+
             <div>
                 <p>
                     On top of that, I have also had some experience with
                     <span class="trait">Arduino</span> and <span class="trait">Unity</span>
                 </p>
             </div>
+
         </div>
     </section>
 
-    
+    <section class="projects">
+        <h2>Projects I've worked on</h2>
+
+        <Projects />
+    </section>
     
 </main>
 
 <style>
 
     main {
-        --margin: 10em;
+        --vertical-margin: 10em;
 
         display: flex;
         flex-direction: column;
-        width: calc(100% - 2 * var(--margin));
-        margin: var(--margin);
+        width: 75%;
+        margin: var(--vertical-margin) 0 var(--vertical-margin) 0;
     }
 
     main > p {
@@ -64,7 +73,7 @@
     }
 
     section {
-        margin: 10em 0 10em 0;
+        margin: var(--vertical-margin) 0 var(--vertical-margin) 0;
     }
 
     section > h2 {
@@ -87,7 +96,7 @@
     }
 
     .small {
-        font-size: 18px;
+        font-size: var(--very-small-font-size);
     }
 
     .programming > div {
