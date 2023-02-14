@@ -4,7 +4,7 @@
 
 	export let parent: HTMLElement;
 
-	const PADS_COUNT = 20;
+	const PADS_COUNT = 30;
 	
 	let posY = -100;
 	let listenerSet = false;

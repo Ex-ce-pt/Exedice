@@ -1,4 +1,6 @@
 <script lang="ts">
+    
+    import { tick } from "svelte";
 
     let thisObj: HTMLElement;
     let folded: boolean = false;
@@ -18,9 +20,16 @@
     }
 
     const copy = (txt: string): void => {
-        navigator.clipboard.writeText(txt).then(() => {
+        // Async is needed to update the actual element,
+        // since when the same value is assigned to the copyStatus,
+        // the element doesn't update
+        navigator.clipboard.writeText(txt).then(async () => {
+            copyStatus = 'undef';
+            await tick();
             copyStatus = 'success';
-        }).catch(() => {
+        }).catch(async () => {
+            copyStatus = 'undef';
+            await tick();
             copyStatus = 'fail';
         });
     }
@@ -98,6 +107,7 @@
 
     <button on:click={toggleFold}></button>
 
+    {#key copyStatus}
     <div
         class="copy-status"
         data-status={copyStatus}
@@ -108,6 +118,7 @@
         Failed to Copy!
         {/if}
     </div>
+    {/key}
 
 </nav>
 
@@ -184,6 +195,8 @@
         background-color: var(--color-bg);
         font-size: var(--very-small-font-size);
         font-weight: bold;
+        user-select: none;
+        -webkit-user-select: none;
     }
 
     .copy-status[data-status="success"] {
@@ -194,8 +207,7 @@
         color: red;
     }
 
-    .copy-status[data-status="success"],
-    .copy-status[data-status="fail"] {
+    .copy-status:not([data-status="undef"]) {
         animation-name: show-copy-status;
         animation-duration: 2s;
         animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
