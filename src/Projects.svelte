@@ -22,4 +22,11 @@
         justify-content: center;
     }
 
+    @media screen and (max-width: 1000px) {
+        main {
+            width: 90%;
+            aspect-ratio: 1 / 1.5;
+        }
+    }
+
 </style>
