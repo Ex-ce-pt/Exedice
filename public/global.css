@@ -33,6 +33,10 @@ body {
 	background-color: rgb(50, 50, 50);
 }
 
+button {
+	padding: 0;
+}
+
 @media screen and (max-width: 1000px) {
 	* {
 		--standart-font-size: 20px;
