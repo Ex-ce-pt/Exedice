@@ -15,7 +15,7 @@
 
 </script>
 
-<main>
+<main style="--scrollbar-width: {isMobileUser ? '0px' : '16px'};">
 
 	<NavBar />
 

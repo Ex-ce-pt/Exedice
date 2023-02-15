@@ -3,7 +3,8 @@
 	--color-bg: #121212;
 	--color-shaded: rgb(70, 70, 70);
 
-	--scrollbar-width: 16px;
+	/* See App.svelte */
+	/* --scrollbar-width: 16px; */
 
 	--standart-font-size: 28px;
 	--very-small-font-size: 18px;

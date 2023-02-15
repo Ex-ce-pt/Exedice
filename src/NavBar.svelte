@@ -157,7 +157,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: calc(100% - var(--scrollbar-width));
+        width: calc(100vw - var(--scrollbar-width));
         height: calc(var(--nav-height) + var(--toggle-height));
         background-color: var(--color-bg);
         z-index: 100;
