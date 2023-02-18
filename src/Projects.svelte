@@ -1,11 +1,13 @@
 <script lang="ts" context="module">
-
+    
+    import type { SvelteComponent } from "svelte";
+    
     interface ProjectData {
-        iconPath?: string,
+        icon?: typeof SvelteComponent,
         title: string,
         desc: string
     }
-
+    
     interface AnimationData {
         running: boolean,
         start: number | null,
@@ -13,19 +15,23 @@
         callback?: () => void,
         callbackCalled?: boolean
     }
-
+    
 </script>
 
 <script lang="ts">
+    
+    import { isMobileUser } from "./App.svelte";
+import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
+    import GravityWarpIcon from "./projectIcons/GravityWarpIcon.svelte";
 
     const PROJECTS: ProjectData[] = [
         {
-            iconPath: `${window.location.href}icons/mark neo.svg`,
+            icon: ExediceIcon,
             title: "My website",
             desc: "This is the website you're currently on! Made with Svelte."
         },
         {
-            iconPath: "",
+            icon: GravityWarpIcon,
             title: "GravityWarp",
             desc: "A nice little shader playground. Shows how gravity distords space. (I'm not a physicist!)"
         }
@@ -132,7 +138,11 @@
     <section bind:this={sectionElement}>
 
         <h2>{PROJECTS[currentProjectIndex].title}</h2>
-        <img src={PROJECTS[currentProjectIndex].iconPath ?? ""} alt={`${PROJECTS[currentProjectIndex].title} logo`} />
+
+        <div class="icon-container">
+            <svelte:component this={PROJECTS[currentProjectIndex].icon} size={isMobileUser ? '3em' : '7em'} />
+        </div>
+
         <p>{PROJECTS[currentProjectIndex].desc}</p>
 
     </section>
@@ -201,22 +211,43 @@
         /* width: 100%; */
         /* height: 100%; */
         margin: 1em;
+        gap: 2em;
         box-sizing: border-box;
     }
 
-    section > img {
-        height: 25%;
-        padding: calc(25% / 2) 0 calc(25% / 2) 0;
+    .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50%;
+        aspect-ratio: 1 / 1;
+        transition: transform 0.2s var(--ease-out);
+    }
+
+    .icon-container:hover {
+        transform: scale(1.15);
+    }
+    
+    section > h2 {
+        font-size: var(--big-font-size);
     }
     
     section > p {
-        font-size: var(--very-small-font-size);
+        font-size: var(--standard-font-size);
     }
-
+    
     @media screen and (max-width: 1000px) {
         main {
             height: 100vw;
             aspect-ratio: 1 / 1.5;
+        }
+
+        section > h2 {
+            font-size: var(--standard-font-size);
+        }
+        
+        section > p {
+            font-size: var(--very-small-font-size);
         }
     }
 

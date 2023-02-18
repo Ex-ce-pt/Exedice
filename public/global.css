@@ -6,11 +6,14 @@
 	/* See App.svelte */
 	/* --scrollbar-width: 16px; */
 
-	--standart-font-size: 28px;
+	--standard-font-size: 28px;
 	--very-small-font-size: 18px;
+	--big-font-size: 32px;
+
+	--ease-out: cubic-bezier(0, 0.9, 0.6, 1);
 	
 	font-family: 'PT Sans', sans-serif;
-    font-size: var(--standart-font-size);
+    font-size: var(--standard-font-size);
 }
 
 html,
