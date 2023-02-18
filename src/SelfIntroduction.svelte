@@ -1,15 +1,34 @@
 <script lang="ts">
 
+    import { onMount } from "svelte"
     import DevSkills from "./Stack.svelte";
     import Projects from "./Projects.svelte";
+
+    let sections: HTMLElement[] = new Array(4);
+
+    let observer = new IntersectionObserver((e) => {
+        const entry: IntersectionObserverEntry = e[0];
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('animated');
+    }, {
+        rootMargin: '0px',
+        threshold: 0
+    });
+
+    onMount(() => {
+        sections.forEach((s) => {
+            if (s != undefined)
+                observer.observe(s);
+        });
+    });
 
 </script>
 
 <main>
 
-    <p>Hi there! I'm Exedice. Glad to see you on my portfolio website!</p>
+    <p bind:this={sections[0]}>Hi there! I'm Exedice. Glad to see you on my portfolio website!</p>
 
-    <section>
+    <section bind:this={sections[1]}>
         <h2>About me</h2>
         <p>
             I'm just a regular highschooler.
@@ -20,14 +39,14 @@
             I'm not very good at it though.
         </p>
         <p>
-            I have a quite strong self-diagnosed impostor syndrome. <span class="small">(now read the previous sentence again)</span>
+            I probably have a impostor syndrome. <span class="small">(now read the previous sentence again)</span>
         </p>
         <p>
             I like math and chemistry. Maybe becoming a <span class="trait">bioinformaticists?</span> Who knows?
         </p>
     </section>
 
-    <section class="programming">
+    <section class="programming" bind:this={sections[2]}>
         <h2>My programming knowledge</h2>
         <div>
 
@@ -49,13 +68,17 @@
         </div>
     </section>
 
-    <section class="projects">
+    <section class="projects" bind:this={sections[3]}>
         <h2>Projects I've worked on</h2>
 
         <Projects />
     </section>
     
 </main>
+
+{#if false}
+<span class="animated"></span>
+{/if}
 
 <style>
 
@@ -102,6 +125,24 @@
     .programming > div {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    .animated {
+        animation-name: fade-in;
+        animation-duration: 1s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fade-in {
+        from {
+            transform: translateY(50%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     @media screen and (max-width: 1000px) {

@@ -13,7 +13,7 @@
         justify-content: center;
         position: relative;
         width: 100%;
-        height: 75vh;
+        height: 75vmin;
         isolation: isolate;
         background-color: grey;
         background-position: center;

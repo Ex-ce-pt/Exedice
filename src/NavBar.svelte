@@ -150,19 +150,18 @@
         --nav-height: 5em;
         --toggle-height: 1em;
         --animation-duration: 0.5s;
-	    --ease: cubic-bezier(0, 0.9, 0.6, 1);
 
         display: grid;
         grid-template-rows: 1fr var(--toggle-height);
         position: fixed;
         top: 0;
         left: 0;
-        width: calc(100% - var(--scrollbar-width));
+        width: calc(100vw - var(--scrollbar-width));
         height: calc(var(--nav-height) + var(--toggle-height));
         background-color: var(--color-bg);
         z-index: 100;
         overflow-x: scroll;
-        transition: top var(--animation-duration) var(--ease);
+        transition: top var(--animation-duration) var(--ease-out);
     }
 
     nav::-webkit-scrollbar {

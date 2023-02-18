@@ -1,9 +1,18 @@
+<script lang="ts" context="module">
+
+    interface DevToolData {
+        name: string,
+        icon?: string
+    }
+
+</script>
+
 <script lang="ts">
     
     import { onMount } from "svelte";
 
 
-    const STACK = [
+    const STACK: DevToolData[] = [
         {
             name: "Svelte",
             icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/1200px-Svelte_Logo.svg.png"
@@ -53,7 +62,7 @@
     {#each STACK as tool, i}
 
     <div style="--index: {STACK.length - i - 1}">
-        <img src={tool.icon} alt={tool.name} />
+        <img src={tool.icon ?? ""} alt={tool.name} />
         <span>{tool.name}</span>
     </div>
 
