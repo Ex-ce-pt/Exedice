@@ -163,6 +163,7 @@
         return leftover;
     }
 
+    // WARNING: this doesn't trigger rerender!
     window.addEventListener("resize", () => {
         console.log("resize");
         currentProjectIndex = currentProjectIndex;
