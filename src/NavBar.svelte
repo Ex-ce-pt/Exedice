@@ -1,6 +1,7 @@
 <script lang="ts">
     
     import { tick } from "svelte";
+    import { goTo } from "./App.svelte"
 
     let thisObj: HTMLElement;
     let folded: boolean = false;
@@ -13,10 +14,6 @@
         const height = style.getPropertyValue('--nav-height');
 
         thisObj.style.top = folded ? `calc(-${height})` : "0";
-    }
-
-    const goTo = (url: string): void => {
-        window.open(url, '_blank');
     }
 
     const copy = (txt: string): void => {

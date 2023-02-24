@@ -197,10 +197,12 @@
             {PROJECTS[currentProjectIndex].title}
         </h2>
 
-        <div class="icon-container">
-            <svelte:component this={PROJECTS[currentProjectIndex].icon} size={isMobileUser ? '3em' : '7em'} />
-        </div>
-
+        <svelte:component
+            this={PROJECTS[currentProjectIndex].icon}
+            height='50%'
+            iconHeight={isMobileUser ? '3em' : '7em'}
+        />
+        
         <p bind:this={lastSectionChild}>{PROJECTS[currentProjectIndex].desc}</p>
 
     </section>
@@ -274,19 +276,6 @@
         margin: 1em;
         gap: max(var(--gap), 0px);
         box-sizing: border-box;
-    }
-
-    .icon-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50%;
-        aspect-ratio: 1 / 1;
-        transition: transform 0.2s var(--ease-out);
-    }
-
-    .icon-container:hover {
-        transform: scale(1.15);
     }
     
     section > h2 {
