@@ -158,14 +158,14 @@
         const yOffset = leTop - sTop;
         const leftover = sHeight - leMarginBottom - leHeight - yOffset;
 
-        console.log(leftover);
+        // console.log(leftover);
 
         return leftover;
     }
 
     // WARNING: this doesn't trigger rerender!
     window.addEventListener("resize", () => {
-        console.log("resize");
+        // console.log("resize");
         currentProjectIndex = currentProjectIndex;
     });
 

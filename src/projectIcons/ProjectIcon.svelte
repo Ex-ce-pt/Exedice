@@ -88,10 +88,8 @@
         display: flex;
         align-items: stretch;
         justify-content: center;
-
-        /* display: grid; */
-        /* grid-template-columns: 1fr var(--actions-width, 0); */
         width: 100%;
+        cursor: pointer;
     }
     
     .icon {

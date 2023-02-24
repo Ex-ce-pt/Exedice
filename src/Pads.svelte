@@ -97,5 +97,11 @@
 	.right-side > div {
 		transform: translateX(calc(-1 * var(--translate-len) * var(--activation)));
 	}
+
+	@media screen and (max-width: 1000px) {
+		main {
+			--width: 0.25em;
+		}
+	}
 	
 </style>
