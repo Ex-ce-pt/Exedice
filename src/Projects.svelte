@@ -5,7 +5,8 @@
     interface ProjectData {
         icon?: typeof SvelteComponent,
         title: string,
-        desc: string
+        desc: string,
+        wip?: boolean
     }
     
     interface AnimationData {
@@ -21,9 +22,11 @@
 <script lang="ts">
     
     import { isMobileUser } from "./App.svelte";
-import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
+    
+    import { onMount, tick } from "svelte";
+    import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
     import GravityWarpIcon from "./projectIcons/GravityWarpIcon.svelte";
-
+    
     const PROJECTS: ProjectData[] = [
         {
             icon: ExediceIcon,
@@ -31,6 +34,7 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
             desc: "This is the website you're currently on! Made with Svelte."
         },
         {
+            wip: true,
             icon: GravityWarpIcon,
             title: "GravityWarp",
             desc: "A nice little shader playground. Shows how gravity distords space. (I'm not a physicist!)"
@@ -40,13 +44,24 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
         return Math.pow(Math.cos((t - 1) * Math.PI / 2), 4);
     };
 
+    let mounted: boolean = false;
     let sectionElement: HTMLElement;
+    let lastSectionChild: HTMLElement;
+    let leftoverVerticalSpace: number = 0;
     let currentProjectIndex = 0;
     let animationData: AnimationData = {
         running: false,
         start: null,
         duration: 1_000
     };
+
+    $: if (currentProjectIndex >= 0 && mounted) {
+        (async () => {
+            leftoverVerticalSpace = 0;
+            await tick();
+            leftoverVerticalSpace = calculateLeftoverVerticalSpace();
+        })();
+    }
     
     const defaultAnimationState = (): void => {
         animationData.running = false;
@@ -119,7 +134,45 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
             currentProjectIndex = (currentProjectIndex + 1) % PROJECTS.length;
         });
     }
-    
+
+    const calculateLeftoverVerticalSpace = (): number => {
+        if (lastSectionChild == undefined) return;
+
+        // Last element
+        const leTop: number = lastSectionChild.getBoundingClientRect().top;
+        const leStyles = getComputedStyle(lastSectionChild);
+        const leHeightPxl: string = leStyles.height;
+        const leMarginBottomPxl: string = leStyles.marginBottom;
+        const leHeight: number = Number(leHeightPxl.substring(0, leHeightPxl.length - 2));
+        const leMarginBottom: number = Number(leMarginBottomPxl.substring(0, leMarginBottomPxl.length - 2));
+
+        // Section
+
+        const sTop: number = sectionElement.getBoundingClientRect().top;
+        const sStyles = getComputedStyle(sectionElement);
+        const sHeightPxl: string = sStyles.height;
+        const sHeight: number = Number(sHeightPxl.substring(0, sHeightPxl.length - 2));
+
+        // Calc
+
+        const yOffset = leTop - sTop;
+        const leftover = sHeight - leMarginBottom - leHeight - yOffset;
+
+        // console.log(leftover);
+
+        return leftover;
+    }
+
+    // WARNING: this doesn't trigger rerender!
+    window.addEventListener("resize", () => {
+        // console.log("resize");
+        currentProjectIndex = currentProjectIndex;
+    });
+
+    onMount(() => {
+        mounted = true;
+    });
+
 </script>
 
 <main>
@@ -135,15 +188,22 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
         <button on:click={next}>&gt;</button>
     </div>
    
-    <section bind:this={sectionElement}>
+    <section
+        style="--leftover-v-space: {leftoverVerticalSpace}px;"
+        bind:this={sectionElement}
+    >
 
-        <h2>{PROJECTS[currentProjectIndex].title}</h2>
+        <h2 class="{PROJECTS[currentProjectIndex].wip ? 'wip' : ''}">
+            {PROJECTS[currentProjectIndex].title}
+        </h2>
 
-        <div class="icon-container">
-            <svelte:component this={PROJECTS[currentProjectIndex].icon} size={isMobileUser ? '3em' : '7em'} />
-        </div>
-
-        <p>{PROJECTS[currentProjectIndex].desc}</p>
+        <svelte:component
+            this={PROJECTS[currentProjectIndex].icon}
+            height='50%'
+            iconHeight={isMobileUser ? '3em' : '7em'}
+        />
+        
+        <p bind:this={lastSectionChild}>{PROJECTS[currentProjectIndex].desc}</p>
 
     </section>
 
@@ -204,6 +264,9 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
     }
     
     section {
+        --bottom-margin: 1.5em;
+        --gap: calc(var(--leftover-v-space) / 2 - var(--bottom-margin));
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -211,25 +274,25 @@ import ExediceIcon from "./projectIcons/ExediceIcon.svelte";
         /* width: 100%; */
         /* height: 100%; */
         margin: 1em;
-        gap: 2em;
+        gap: max(var(--gap), 0px);
         box-sizing: border-box;
-    }
-
-    .icon-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50%;
-        aspect-ratio: 1 / 1;
-        transition: transform 0.2s var(--ease-out);
-    }
-
-    .icon-container:hover {
-        transform: scale(1.15);
     }
     
     section > h2 {
+        position: relative;
         font-size: var(--big-font-size);
+    }
+
+    section > h2.wip:after {
+        content: 'wip';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 3px 1em 3px 1em;
+        border: 1px solid red;
+        color: red;
+        text-transform: uppercase;
+        transform: translate(125%, 100%) rotate(20deg);
     }
     
     section > p {

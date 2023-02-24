@@ -2,6 +2,10 @@
 
 	export const isMobileUser = /Android|iPhone/i.test(navigator.userAgent);
 
+	export const goTo = (url: string): void => {
+        window.open(url, '_blank');
+    }
+
 </script>
 
 <script lang="ts">
